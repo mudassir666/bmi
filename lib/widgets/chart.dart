@@ -14,7 +14,6 @@ class Chart extends StatefulWidget {
 }
 
 class _ChartState extends State<Chart> {
-
   late List<BmiModel> _chartData;
 
   void initState() {
@@ -35,9 +34,14 @@ class _ChartState extends State<Chart> {
         elevation: 6,
         child: SafeArea(
           child: SfCartesianChart(
+            // title:ChartTitle(text: "BMI CHART") ,
+            // legend: Legend(isVisible: true),
             series: <ChartSeries>[
-              LineSeries<BmiModel,double>(dataSource: _chartData, xValueMapper: (BmiModel id, _) => id.increment,
-              yValueMapper: (BmiModel id,_) =>id.bmi )
+              LineSeries<BmiModel, double>(
+                  dataSource: _chartData,
+                  xValueMapper: (BmiModel id, _) => id.increment,
+                  yValueMapper: (BmiModel id, _) => id.bmi,
+                  dataLabelSettings: DataLabelSettings(isVisible: true,))
             ],
           ),
         ),
@@ -45,4 +49,3 @@ class _ChartState extends State<Chart> {
     );
   }
 }
-

@@ -40,7 +40,7 @@ class _NewBmiState extends State<NewBmi> {
         return;
       }
 
-      widget.addBmi(h, w, bmi, rating);
+      widget.addBmi(h, w, double.parse(bmi.toStringAsFixed(1)), rating);
     }
 
     return Card(
