@@ -1,5 +1,6 @@
 import 'package:bmi/models/Bmi_model.dart';
 import 'package:bmi/widgets/bmi_list.dart';
+import 'package:bmi/widgets/chart.dart';
 import 'package:bmi/widgets/new_bmi.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +19,17 @@ class _MyHomePageState extends State<MyHomePage> {
     //     id: "5", height: 1.8018, weight: 64, bmi: 28.7, rating: "UnderWeight"),
   ];
 
+  double increment = 0;
+
   void _addBmi(double h, double w, double bmi, String r) {
+    increment++;
     final addNewBmi = BmiModel(
         id: DateTime.now().toString(),
         height: h,
         weight: w,
         bmi: bmi,
-        rating: r);
+        rating: r,
+        increment: increment);
     setState(() {
       _bmiData.add(addNewBmi);
     });
@@ -33,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _deleteBmi(String id) {
     setState(() {
       _bmiData.removeWhere((bmi) {
-       return bmi.id == id;
+        return bmi.id == id;
       });
     });
   }
@@ -46,18 +51,16 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-                color: Colors.blue,
-                child: Text(
-                  "Chart",
-                  textAlign: TextAlign.center,
-                )),
-            NewBmi(_addBmi),
-            BmiList(_bmiData , _deleteBmi),
-          ],
+        child: Container(
+          margin: EdgeInsets.all(2),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Chart(_bmiData),
+              NewBmi(_addBmi),
+              BmiList(_bmiData, _deleteBmi),
+            ],
+          ),
         ),
       ),
     );

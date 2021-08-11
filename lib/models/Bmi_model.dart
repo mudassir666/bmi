@@ -1,4 +1,5 @@
 class BmiModel {
+  final double increment;
   final String id;
   final double height;
   final double weight;
@@ -11,5 +12,6 @@ class BmiModel {
     required this.weight,
     required this.bmi,
     required this.rating,
+    required this.increment,
   });
 }

@@ -4,47 +4,45 @@ class NewBmi extends StatefulWidget {
   // const NewBmi({ Key? key }) : super(key: key);
   final Function addBmi;
   NewBmi(this.addBmi);
-
   @override
   _NewBmiState createState() => _NewBmiState();
 }
 
 class _NewBmiState extends State<NewBmi> {
-
-
   @override
   Widget build(BuildContext context) {
-  final _height = TextEditingController();
-  final _weight = TextEditingController();
+    final _height = TextEditingController();
+    final _weight = TextEditingController();
 
-  void submit() {
-    if (_height.text.isEmpty || _weight.text.isEmpty) {
-      return;
+    void submit() {
+      if (_height.text.isEmpty || _weight.text.isEmpty) {
+        return;
+      }
+
+      final h = double.parse(_height.text);
+      final w = double.parse(_weight.text);
+      final bmi = w / (h * h);
+
+      if (h < 1 || w < 1 || bmi < 1) {
+        return;
+      }
+
+      final rating;
+      if (bmi < 18.5) {
+        rating = "Underweight";
+      } else if (bmi >= 18.5 && bmi < 25) {
+        rating = "Normal";
+      } else if (bmi >= 25 && bmi < 30) {
+        rating = "Overweight";
+      } else if (bmi >= 30) {
+        rating = "Obesity";
+      } else {
+        return;
+      }
+
+      widget.addBmi(h, w, bmi, rating);
     }
 
-    final h = double.parse(_height.text);
-    final w = double.parse(_weight.text);
-    final bmi = w / (h * h);
-
-    if (h < 1 || w < 1 || bmi < 1) {
-      return;
-    }
-
-    final rating;
-    if (bmi < 18.5) {
-      rating = "Underweight";
-    } else if (bmi >= 18.5 && bmi < 25) {
-      rating = "Normal";
-    } else if (bmi >= 25 && bmi < 30) {
-      rating = "Overweight";
-    } else if (bmi >= 30) {
-      rating = "Obesity";
-    } else {
-      return;
-    }
-
-    widget.addBmi(h, w, bmi,rating);
-  }
     return Card(
       elevation: 6,
       child: Container(
