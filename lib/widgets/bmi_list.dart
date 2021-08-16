@@ -13,27 +13,29 @@ class BmiList extends StatelessWidget {
     return Container(
       height: 350,
       child: _bmiData.isEmpty
-          ? Column(
-              children: [
-                SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  "Empty!",
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  height: 200,
-                  child: Image.asset(
-                    "assets/images/waiting.png",
-                    fit: BoxFit.cover,
+          ? LayoutBuilder(builder: (ctx, constraints) {
+              return Column(
+                children: [
+                  SizedBox(
+                    height: constraints.maxHeight * 0.1,
                   ),
-                )
-              ],
-            )
+                  Text(
+                    "Empty!",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    height: constraints.maxHeight * 0.6,
+                    child: Image.asset(
+                      "assets/images/waiting.png",
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                ],
+              );
+            })
           : ListView.builder(
               itemCount: _bmiData.length,
               itemBuilder: (context, index) {

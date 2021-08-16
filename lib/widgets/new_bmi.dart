@@ -9,16 +9,18 @@ class NewBmi extends StatefulWidget {
 }
 
 class _NewBmiState extends State<NewBmi> {
+  final _height = TextEditingController();
+  final _weight = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final _height = TextEditingController();
-    final _weight = TextEditingController();
-
+    // final _height = TextEditingController();
+    // final _weight = TextEditingController();
     void submit() {
       if (_height.text.isEmpty || _weight.text.isEmpty) {
         return;
       }
-
+      print("check 1");
       final h = double.parse(_height.text);
       final w = double.parse(_weight.text);
       final bmi = w / (h * h);
@@ -26,7 +28,7 @@ class _NewBmiState extends State<NewBmi> {
       if (h < 1 || w < 1 || bmi < 1) {
         return;
       }
-
+      print("check 2");
       final rating;
       if (bmi < 18.5) {
         rating = "Underweight";
@@ -39,81 +41,99 @@ class _NewBmiState extends State<NewBmi> {
       } else {
         return;
       }
-
+      _weight.clear();
+      _height.clear();
+      print("check 3");
       widget.addBmi(h, w, double.parse(bmi.toStringAsFixed(1)), rating);
+
+      //  FocusScope.of(context);
+      // Navigator.of(context).pop();
     }
 
-    return Card(
-      elevation: 6,
-      child: Container(
-        padding: EdgeInsets.all(8),
-        margin: EdgeInsets.all(8),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _height,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(32.0)),
+    return LayoutBuilder(builder: (ctx, constraints) {
+      return Card(
+        elevation: 6,
+        child: Container(
+          padding: EdgeInsets.all(6),
+          margin: EdgeInsets.all(6),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: constraints.maxHeight * 0.325,
+                      child: TextField(
+                        controller: _height,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(32.0)),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColorDark),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColorDark),
+                          ),
+                          labelText: "Height (m)",
+                        ),
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Theme.of(context).primaryColorDark),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Theme.of(context).primaryColorDark),
-                      ),
-                      labelText: "Height (m)",
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: _weight,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Theme.of(context).primaryColorDark),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Theme.of(context).primaryColorDark),
-                      ),
-                      labelText: "Weight (Kg)",
-                    ),
+                  SizedBox(
+                    width: 15,
                   ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            ElevatedButton(
-              onPressed: submit,
-              child: Text(
-                "CALCULATE",
-                style: TextStyle(color: Colors.white),
+                  Expanded(
+                    child: Container(
+                      height: constraints.maxHeight * 0.325,
+                      child: TextField(
+                        controller: _weight,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(32.0)),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColorDark),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColorDark),
+                          ),
+                          labelText: "Weight (Kg)",
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    Theme.of(context).primaryColorDark),
+              SizedBox(
+                height: constraints.maxHeight * 0.05,
               ),
-            )
-          ],
+              Container(
+                height: constraints.maxHeight * 0.3,
+                child: ElevatedButton(
+                  onPressed: submit,
+                  child: Text(
+                    "CALCULATE",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColorDark),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

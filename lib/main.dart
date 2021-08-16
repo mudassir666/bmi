@@ -4,7 +4,11 @@ import 'package:flutter/services.dart';
 import 'Bmi_Home_Page.dart';
 
 void main() {
-  
+   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(MyApp());
 }
 

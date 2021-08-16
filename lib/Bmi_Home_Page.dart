@@ -45,20 +45,37 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appbar = AppBar(
+      title: Text("BMI CALCULATOR"),
+      centerTitle: true,
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text("BMI CALCULATOR"),
-        centerTitle: true,
-      ),
+      appBar: appbar,
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Chart(_bmiData),
-              NewBmi(_addBmi),
-              BmiList(_bmiData, _deleteBmi),
+              Container(
+                height: (MediaQuery.of(context).size.height -
+                        appbar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.25,
+                child: Chart(_bmiData),
+              ),
+              Container(
+                  height: (MediaQuery.of(context).size.height -
+                          appbar.preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.25,
+                  child: NewBmi(_addBmi)),
+              Container(
+                  height: (MediaQuery.of(context).size.height -
+                          appbar.preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.5,
+                  child: BmiList(_bmiData, _deleteBmi)),
             ],
           ),
         ),
@@ -66,4 +83,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
